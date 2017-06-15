@@ -14,11 +14,20 @@ function readFile(fileName){
 }
 
 var asyncReadFile = async function () {
-  var f1 = await readFile('./index.js');
-  var f2 = await readFile('./package.json');
-  console.log(f1.toString());
-  console.log(f2.toString());
+  await readFile('./index.js');
+  await readFile('./package.json');
+  if(Math.random()> 0.5){
+      return 1;
+  }else{
+      throw new Error('error');
+  }
 };
 
 var result = asyncReadFile(); //自带执行器，直接输出结果,result是一个promise对象
+result.then(function(v){
+    console.log(v)
+}, function(v){
+    console.log(v)
+})
+
 ```
