@@ -21,4 +21,4 @@ var asyncReadFile = async function () {
 };
 
 var result = asyncReadFile(); //自带执行器，直接输出结果,result是一个promise对象
-···
+```
