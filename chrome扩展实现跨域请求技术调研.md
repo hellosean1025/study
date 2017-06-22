@@ -1,7 +1,7 @@
-### chrome extension介绍
+## chrome extension介绍
 chrome扩展其实就是由html,js,css文件组成的，可以调用浏览器所有api,ajax请求不会收到浏览器跨域限制，解决跨域请求，有两种实现办法。
 
-#### 一.通过修改服务器返回的resHeader(Access-Control-Allow-Origin)为*来解决
+### 一.通过修改服务器返回的resHeader(Access-Control-Allow-Origin)为*来解决
 
 1. 根据跨域资源共享 CORS 协议，只要服务器返回access-control-allow-origin为*则允许跨域请求，但只有满足不带cookie和简单请求才行
 
@@ -15,16 +15,15 @@ chrome扩展其实就是由html,js,css文件组成的，可以调用浏览器所
 
 **综上所述** ： 通过修改header方案是不可行的
 
+### 二.使用chrome提供的content_scripts
 
-#### 二.使用chrome提供的content_scripts
+1.content_scripts是扩展提供的js脚本。js脚本可获取和修改当前页面dom元素，也就是说可以和原有页面的js脚本共享dom，但是js是不能相互调用的
 
-content_scripts是扩展提供的js脚本。js脚本可获取和修改当前页面dom元素，也就是说可以和原有页面的js脚本共享dom，但是js是不能相互调用的
-
-通过参考nei和apizza.cc chrome扩展，他们是通过content_scripts脚本绑定原网页dom事件，操作原网页dom来实现的。
+2.通过参考nei和apizza.cc chrome扩展，他们是通过content_scripts脚本绑定原网页dom事件，操作原网页dom来实现的。
 
 但这样是有一定问题的，比如我们的网站页面更新了，旧的谷歌扩展很可能不兼容新的页面，很可能导致功能出现问题，必须强制用户升级才可以。
 
-**那还有其他解决办法吗？**
+### 三.那还有其他解决办法吗？
 
 当然有，既然原有的js和content_scripts可以共享dom，那么通过操作dom元素，使用定时器检查dom元素的改变，也能拿到需要进行的操作。
 
