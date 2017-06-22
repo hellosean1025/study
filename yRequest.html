@@ -1,0 +1,59 @@
+<html>
+<body>
+<h1>hello!!!</h1>
+<script src="jquery.min.js"></script>
+<script>
+
+function createNode(tagName, attributes, parentNode){
+    options = attributes || {};
+    tagName =  tagName || 'div';
+    var dom = document.createElement(tagName);
+    for(var attr in attributes){
+        if(attr === 'id')  dom.id = options[attr];
+        else dom.setAttribute(attr, options[attr]);
+    }
+    if(parentNode) parentNode.appendChild(dom);
+    return dom;
+}
+
+
+var container = 'y-request';
+var INITSTATUS = 0;
+var RUNSTATUS = 1;
+var ENDSTATUS = 2;
+var yRequestDom = createNode('div', {id: container, style: 'display:none'}, document.getElementsByTagName('body')[0]);
+
+var id= 0;
+
+ function yRequest(req, cb){
+     req = JSON.stringify(req, null, 4);
+     var div = createNode('div', {
+            _id: 'y-request-' + id++,
+            status: INITSTATUS
+         }, yRequestDom);
+     div.innerText = req;
+ }
+
+yRequest({
+    url: 'http://www.zhihu.com',
+    header:{
+        abs: 1
+    },
+    params: {
+        xxx: 222
+    }
+})
+
+
+function yResponse(){
+    var reqsDom = yRequestDom.childNodes;
+    reqsDom.forEach(function(req){
+        req = JSON.parse(req.innerText);
+        console.log(req)
+    })
+}
+
+yResponse()
+</script>
+</body>
+</html>
